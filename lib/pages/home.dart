@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:iron_recipes/data.dart';
 import 'package:iron_recipes/utils/screen.dart';
 import 'package:iron_recipes/utils/textStyle.dart';
+
+import '../utils/screen.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -12,12 +15,21 @@ class _HomePageState extends State<HomePage> {
   List<DropdownMenuItem> dropDownWidget = [];
   String _value = 'ล่าสุด';
 
-  PageController _pageController = PageController();
+  List<String> topicsName = [
+    'แนะนำ',
+    'มือใหม่',
+    'จานหลัก',
+    'ทานเล่น',
+    'สุขภาพ',
+    'นานาชาติ',
+    'ขนม',
+  ];
+
+  String result = 'แนะนำ';
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    _pageController = PageController(initialPage: 0);
     dropDownText.forEach((element) {
       dropDownWidget.add(
         DropdownMenuItem(
@@ -40,25 +52,25 @@ class _HomePageState extends State<HomePage> {
         padding: EdgeInsets.symmetric(horizontal: Screen.width * 0.07),
         child: ListView(
           padding: EdgeInsets.only(
-              top: Screen.height * 0.05, bottom: Screen.height * 0.4),
+              top: Screen.width * 0.035, bottom: Screen.width * 0.5),
           children: [
             Text(
               'Iron Recipes',
               style: MyText.topics,
             ),
-            SizedBox(height: Screen.height * 0.025),
+            SizedBox(height: Screen.width * 0.015),
             Container(
               width: Screen.width,
-              height: Screen.height * 0.4,
+              height: Screen.width * 0.3,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(Screen.width * 0.02),
                   color: Color(0xfffff0f0)),
               child: Image.asset(
                 'assets/Frame 1.png',
-                fit: BoxFit.fill,
+                fit: BoxFit.fitHeight,
               ),
             ),
-            SizedBox(height: Screen.height * 0.025),
+            SizedBox(height: Screen.width * 0.015),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -69,14 +81,14 @@ class _HomePageState extends State<HomePage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        height: Screen.height * 0.055,
+                        height: Screen.width * 0.038,
                         alignment: Alignment.centerLeft,
                         child: Text(
                           'หมวดหมู่',
                           style: MyText.topics,
                         ),
                       ),
-                      SizedBox(height: Screen.height * 0.06),
+                      SizedBox(height: Screen.width * 0.05),
                       for (var i = 0; i < topicsName.length; i++)
                         _buildButton(i)
                     ],
@@ -93,7 +105,7 @@ class _HomePageState extends State<HomePage> {
                           children: [
                             Container(
                               width: Screen.width * 0.32,
-                              height: Screen.height * 0.055,
+                              height: Screen.width * 0.038,
                               decoration: BoxDecoration(
                                   color: Color(0xffefefef),
                                   borderRadius: BorderRadius.circular(
@@ -117,9 +129,9 @@ class _HomePageState extends State<HomePage> {
                             ),
                             Container(
                               width: Screen.width * 0.15,
-                              height: Screen.height * 0.05,
+                              height: Screen.width * 0.032,
                               padding: EdgeInsets.symmetric(
-                                  horizontal: Screen.width * 0.015),
+                                  horizontal: Screen.width * 0.012),
                               decoration: BoxDecoration(
                                   color: Color(0xff242424),
                                   borderRadius: BorderRadius.circular(
@@ -159,7 +171,7 @@ class _HomePageState extends State<HomePage> {
                             )
                           ],
                         ),
-                        SizedBox(height: Screen.height * 0.06),
+                        SizedBox(height: Screen.width * 0.05),
                         _buildMenu(topicsName.indexOf(result))
                       ],
                     ),
@@ -172,27 +184,6 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-
-  List<String> topicsName = [
-    'แนะนำ',
-    'มือใหม่',
-    'จานหลัก',
-    'ทานเล่น',
-    'สุขภาพ',
-    'นานาชาติ',
-    'ขนม',
-  ];
-  List<Color> menuColor = [
-    Colors.red,
-    Colors.purple,
-    Colors.black,
-    Colors.white,
-    Colors.orange,
-    Colors.pink,
-    Colors.blue,
-  ];
-
-  String result = 'แนะนำ';
 
   Widget _buildButton(int index) {
     return Container(
@@ -207,7 +198,6 @@ class _HomePageState extends State<HomePage> {
         onPressed: () {
           setState(() {
             result = topicsName[index];
-            // _pageController.jumpToPage(index);
           });
         },
         child: Container(
@@ -246,7 +236,7 @@ class _HomePageState extends State<HomePage> {
         spacing: Screen.width * 0.013,
         runSpacing: Screen.width * 0.013,
         children: [
-          for (var i = 0; i < 5; i++)
+          for (var i = 0; i < Data.allData[index].length; i++)
             Container(
               width: Screen.width * 0.194,
               height: Screen.width * 0.145,
@@ -260,6 +250,63 @@ class _HomePageState extends State<HomePage> {
                 ],
                 borderRadius: BorderRadius.vertical(
                   top: Radius.circular(Screen.width * 0.012),
+                ),
+              ),
+              child: FlatButton(
+                padding: EdgeInsets.zero,
+                highlightColor: Colors.transparent,
+                splashColor: Colors.transparent,
+                onPressed: () {},
+                child: Column(
+                  children: [
+                    Container(
+                      width: Screen.width * 0.194,
+                      height: Screen.width * 0.111,
+                      decoration: BoxDecoration(
+                          borderRadius:
+                              BorderRadius.circular(Screen.width * 0.012)),
+                      child: ClipRRect(
+                        borderRadius:
+                            BorderRadius.circular(Screen.width * 0.012),
+                        child: Data.allData[index][i]['img'],
+                      ),
+                    ),
+                    Container(
+                      width: Screen.width * 0.194,
+                      height: Screen.width * 0.034,
+                      child: Stack(
+                        children: [
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              Data.allData[index][i]['name'],
+                              style: TextStyle(
+                                  fontWeight: FontWeight.normal,
+                                  fontSize: Screen.width * 0.016),
+                            ),
+                          ),
+                          Align(
+                            alignment: Alignment.bottomLeft,
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.person_outline_rounded,
+                                  size: Screen.width * 0.014,
+                                ),
+                                Text(
+                                  '45',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w300,
+                                      fontSize: Screen.width * 0.01),
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    )
+                  ],
                 ),
               ),
             )
