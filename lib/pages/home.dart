@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> {
         padding: EdgeInsets.symmetric(horizontal: Screen.width * 0.07),
         child: ListView(
           padding: EdgeInsets.only(
-              top: Screen.width * 0.035, bottom: Screen.width * 0.5),
+              top: Screen.width * 0.035, bottom: Screen.width * 0.1),
           children: [
             Container(
               alignment: Alignment.centerLeft,

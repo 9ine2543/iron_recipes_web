@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:frino_icons/frino_icons.dart';
 import 'package:iron_recipes/data.dart';
 import 'package:iron_recipes/utils/screen.dart';
 import 'package:iron_recipes/utils/textStyle.dart';
+import 'package:flutter/services.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:printing/printing.dart';
+
+import 'dart:js' as js;
 
 class RecipePage extends StatefulWidget {
   final int indexCategory, indexMenu;
@@ -274,6 +281,49 @@ class _RecipePageState extends State<RecipePage> {
                             color: Color(0xff3a3a3a),
                             borderRadius:
                                 BorderRadius.circular(Screen.width * 0.03)),
+                        child: Row(
+                          children: [
+                            Spacer(flex: 2),
+                            IconButton(
+                              padding: EdgeInsets.all(0),
+                              alignment: Alignment.center,
+                              icon: Icon(
+                                FrinoIcons.f_print,
+                                size: Screen.width * 0.024,
+                                color: Colors.white,
+                              ),
+                              onPressed: () {},
+                            ),
+                            Spacer(flex: 1),
+                            Container(
+                              width: Screen.width * 0.003,
+                              height: Screen.width * 0.035,
+                              decoration: BoxDecoration(
+                                color: Color(0xff505050),
+                                borderRadius:
+                                    BorderRadius.circular(Screen.width * 0.003),
+                              ),
+                            ),
+                            Spacer(flex: 1),
+                            IconButton(
+                              padding: EdgeInsets.all(0),
+                              alignment: Alignment.center,
+                              icon: Icon(
+                                FrinoIcons.f_share,
+                                size: Screen.width * 0.024,
+                                color: Colors.white,
+                              ),
+                              onPressed: () {
+                                print(js.context['location']['href']);
+                                Clipboard.setData(new ClipboardData(
+                                    text: js.context['location']['href']));
+                                js.context
+                                    .callMethod("alert", ['Copy to clipboard']);
+                              },
+                            ),
+                            Spacer(flex: 2),
+                          ],
+                        ),
                       ),
                     ),
                   ),
