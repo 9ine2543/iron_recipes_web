@@ -54,9 +54,22 @@ class _HomePageState extends State<HomePage> {
           padding: EdgeInsets.only(
               top: Screen.width * 0.035, bottom: Screen.width * 0.5),
           children: [
-            Text(
-              'Iron Recipes',
-              style: MyText.topics,
+            Container(
+              alignment: Alignment.centerLeft,
+              child: TextButton(
+                style: ButtonStyle(
+                    overlayColor:
+                        MaterialStateProperty.all<Color>(Colors.transparent),
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.transparent)),
+                onPressed: () {
+                  Navigator.pushNamed(context, '/');
+                },
+                child: Text(
+                  'Iron Recipes',
+                  style: MyText.topics,
+                ),
+              ),
             ),
             SizedBox(height: Screen.width * 0.015),
             Container(
@@ -256,7 +269,9 @@ class _HomePageState extends State<HomePage> {
                 padding: EdgeInsets.zero,
                 highlightColor: Colors.transparent,
                 splashColor: Colors.transparent,
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, '/article/$index$i');
+                },
                 child: Column(
                   children: [
                     Container(
