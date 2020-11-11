@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frino_icons/frino_icons.dart';
 import 'package:iron_recipes/data.dart';
+import 'package:iron_recipes/pages/dialog.dart';
 import 'package:iron_recipes/utils/screen.dart';
 import 'package:iron_recipes/utils/textStyle.dart';
 import 'package:flutter/services.dart';
@@ -64,9 +65,67 @@ class _RecipePageState extends State<RecipePage> {
                             style: MyText.topics,
                           ),
                         ),
-                        Text(
-                          'เมนูง่าย ๆ ใช้กระทะแค่ใบเดียว',
-                          style: MyText.subTopics,
+                        Spacer(),
+                        Container(
+                          alignment: Alignment.centerLeft,
+                          child: TextButton(
+                            style: ButtonStyle(
+                                overlayColor: MaterialStateProperty.all<Color>(
+                                    Colors.transparent),
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        Colors.transparent)),
+                            onPressed: Data.authStatus
+                                ? () {}
+                                : () async {
+                                    print('login dialog');
+                                    await showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return LoginDialog();
+                                      },
+                                    );
+                                    setState(() {});
+                                  },
+                            child: Text(
+                              Data.authStatus ? Data.username : 'เข้าสู่ระบบ',
+                              style: MyText.authText,
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: Screen.width * 0.01),
+                        Container(
+                          alignment: Alignment.centerRight,
+                          child: TextButton(
+                            style: ButtonStyle(
+                                overlayColor: MaterialStateProperty.all<Color>(
+                                    Colors.transparent),
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        Colors.transparent)),
+                            onPressed: () async {
+                              if (Data.authStatus) {
+                                setState(() {
+                                  Data.username = '';
+                                  Data.authStatus = false;
+                                });
+                              } else {
+                                await showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return RegisDialog();
+                                  },
+                                );
+                                setState(() {});
+                              }
+                            },
+                            child: Text(
+                              Data.authStatus ? 'ออกจากระบบ' : 'ลงทะเบียน',
+                              style: Data.authStatus
+                                  ? MyText.authRedText
+                                  : MyText.authText,
+                            ),
+                          ),
                         ),
                       ],
                     ),
