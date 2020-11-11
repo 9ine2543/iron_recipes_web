@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iron_recipes/data.dart';
+import 'package:iron_recipes/pages/dialog.dart';
 import 'package:iron_recipes/utils/screen.dart';
 import 'package:iron_recipes/utils/textStyle.dart';
 
@@ -44,6 +45,12 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     Screen.height = MediaQuery.of(context).size.height;
     Screen.width = MediaQuery.of(context).size.width;
+    if (Data.updateVal) {
+      setState(() {
+        Data.updateVal = false;
+      });
+    }
+    print('eiei');
     return Scaffold(
       backgroundColor: Colors.white,
       body: Container(
@@ -54,22 +61,88 @@ class _HomePageState extends State<HomePage> {
           padding: EdgeInsets.only(
               top: Screen.width * 0.035, bottom: Screen.width * 0.1),
           children: [
-            Container(
-              alignment: Alignment.centerLeft,
-              child: TextButton(
-                style: ButtonStyle(
-                    overlayColor:
-                        MaterialStateProperty.all<Color>(Colors.transparent),
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.transparent)),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/');
-                },
-                child: Text(
-                  'Iron Recipes',
-                  style: MyText.topics,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  alignment: Alignment.centerLeft,
+                  child: TextButton(
+                    style: ButtonStyle(
+                        overlayColor: MaterialStateProperty.all<Color>(
+                            Colors.transparent),
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                            Colors.transparent)),
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/');
+                    },
+                    child: Text(
+                      'Iron Recipes',
+                      style: MyText.topics,
+                    ),
+                  ),
                 ),
-              ),
+                Spacer(),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  child: TextButton(
+                    style: ButtonStyle(
+                        overlayColor: MaterialStateProperty.all<Color>(
+                            Colors.transparent),
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                            Colors.transparent)),
+                    onPressed: Data.authStatus
+                        ? () {}
+                        : () async {
+                            print('login dialog');
+                            await showDialog(
+                              context: context,
+                              builder: (context) {
+                                return LoginDialog();
+                              },
+                            );
+                            setState(() {});
+                          },
+                    child: Text(
+                      Data.authStatus ? Data.username : 'เข้าสู่ระบบ',
+                      style: MyText.authText,
+                    ),
+                  ),
+                ),
+                SizedBox(width: Screen.width * 0.01),
+                Container(
+                  alignment: Alignment.centerRight,
+                  child: TextButton(
+                    style: ButtonStyle(
+                        overlayColor: MaterialStateProperty.all<Color>(
+                            Colors.transparent),
+                        backgroundColor: MaterialStateProperty.all<Color>(
+                            Colors.transparent)),
+                    onPressed: () async {
+                      if (Data.authStatus) {
+                        setState(() {
+                          Data.username = '';
+                          Data.authStatus = false;
+                        });
+                      } else {
+                        await showDialog(
+                          context: context,
+                          builder: (context) {
+                            return RegisDialog();
+                          },
+                        );
+                        setState(() {});
+                      }
+                    },
+                    child: Text(
+                      Data.authStatus ? 'ออกจากระบบ' : 'ลงทะเบียน',
+                      style: Data.authStatus
+                          ? MyText.authRedText
+                          : MyText.authText,
+                    ),
+                  ),
+                ),
+              ],
             ),
             SizedBox(height: Screen.width * 0.015),
             Container(
@@ -271,6 +344,7 @@ class _HomePageState extends State<HomePage> {
                 splashColor: Colors.transparent,
                 onPressed: () {
                   Navigator.pushNamed(context, '/article/$index$i');
+                  setState(() {});
                 },
                 child: Column(
                   children: [
@@ -311,6 +385,24 @@ class _HomePageState extends State<HomePage> {
                                 ),
                                 Text(
                                   '45',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w300,
+                                      fontSize: Screen.width * 0.01),
+                                ),
+                                SizedBox(width: Screen.width * 0.005),
+                                Icon(
+                                  Data.likeList.contains(
+                                          Data.allData[index][i]['name'])
+                                      ? Icons.favorite_rounded
+                                      : Icons.favorite_border_rounded,
+                                  color: Data.likeList.contains(
+                                          Data.allData[index][i]['name'])
+                                      ? Colors.red
+                                      : Colors.black,
+                                  size: Screen.width * 0.014,
+                                ),
+                                Text(
+                                  Data.allData[index][i]['like'].toString(),
                                   style: TextStyle(
                                       fontWeight: FontWeight.w300,
                                       fontSize: Screen.width * 0.01),

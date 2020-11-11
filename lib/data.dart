@@ -3,10 +3,28 @@ import 'package:flutter/material.dart';
 class Data {
   Data._();
 
+  static bool authStatus = false;
+
+  static String username = '61010345@kmitl.ac.th';
+
+  static Map userList = {
+    '61010345@kmitl.ac.th': {
+      'email': '61010345@kmitl.ac.th',
+      'pass': '61010345'
+    }
+  };
+
+  static bool updateVal = true;
+
+  static List likeList = [];
+
+  static int likeCount = 0;
+
   static List allData = [
     [
       {
         'name': 'ไข่เจียวทรงเครื่อง',
+        'like': 0,
         'img': Image.asset(
           'assets/img/101.png',
           fit: BoxFit.cover,
@@ -30,6 +48,7 @@ class Data {
       },
       {
         'name': 'ข้าวผัดอเมริกัน',
+        'like': 3,
         'img': Image.asset(
           'assets/img/201.png',
           fit: BoxFit.cover,
@@ -59,6 +78,7 @@ class Data {
       },
       {
         'name': 'เต้าหู้ผัดเสฉวน',
+        'like': 0,
         'img': Image.asset(
           'assets/img/502.png',
           fit: BoxFit.cover,
@@ -86,6 +106,7 @@ class Data {
       },
       {
         'name': 'เบอร์เกอร์เนื้อ',
+        'like': 0,
         'img': Image.asset(
           'assets/img/503.png',
           fit: BoxFit.cover,
@@ -111,6 +132,7 @@ class Data {
       },
       {
         'name': 'ขนมปังชุบไข่',
+        'like': 0,
         'img': Image.asset(
           'assets/img/601.png',
           fit: BoxFit.cover,
@@ -133,6 +155,7 @@ class Data {
     [
       {
         'name': 'ไข่เจียวทรงเครื่อง',
+        'like': 0,
         'img': Image.asset(
           'assets/img/101.png',
           fit: BoxFit.cover,
@@ -156,6 +179,7 @@ class Data {
       },
       {
         'name': 'กะเพราไก่',
+        'like': 0,
         'img': Image.asset(
           'assets/img/102.png',
           fit: BoxFit.cover,
@@ -181,6 +205,7 @@ class Data {
       },
       {
         'name': 'สามชั้นผัดพริกเกลือ',
+        'like': 0,
         'img': Image.asset(
           'assets/img/103.png',
           fit: BoxFit.cover,
@@ -202,6 +227,7 @@ class Data {
       },
       {
         'name': 'ผัดพริกแกงหมู',
+        'like': 0,
         'img': Image.asset(
           'assets/img/104.png',
           fit: BoxFit.cover,
@@ -226,6 +252,7 @@ class Data {
     [
       {
         'name': 'ข้าวผัดอเมริกัน',
+        'like': 0,
         'img': Image.asset(
           'assets/img/201.png',
           fit: BoxFit.cover,
@@ -255,6 +282,7 @@ class Data {
       },
       {
         'name': 'ผัดไทยกุ้งสด',
+        'like': 0,
         'img': Image.asset(
           'assets/img/202.png',
           fit: BoxFit.cover,
@@ -284,6 +312,7 @@ class Data {
       },
       {
         'name': 'ข้าวผัดมันกุ้ง',
+        'like': 0,
         'img': Image.asset(
           'assets/img/203.png',
           fit: BoxFit.cover,
@@ -309,6 +338,7 @@ class Data {
     [
       {
         'name': 'นมสดทอด',
+        'like': 0,
         'img': Image.asset(
           'assets/img/301.png',
           fit: BoxFit.cover,
@@ -335,6 +365,7 @@ class Data {
       },
       {
         'name': 'ผักทอด',
+        'like': 0,
         'img': Image.asset(
           'assets/img/302.png',
           fit: BoxFit.cover,
@@ -359,6 +390,7 @@ class Data {
       },
       {
         'name': 'ไข่ม้วนญี่ปุ่น',
+        'like': 0,
         'img': Image.asset(
           'assets/img/303.png',
           fit: BoxFit.cover,
@@ -386,6 +418,7 @@ class Data {
     [
       {
         'name': 'ข้าวไรซ์เบอร์รีผัดปลานิล',
+        'like': 0,
         'img': Image.asset(
           'assets/img/401.png',
           fit: BoxFit.cover,
@@ -418,6 +451,7 @@ class Data {
       },
       {
         'name': 'ผักบุ้งผัดน้ำมันหอย',
+        'like': 0,
         'img': Image.asset(
           'assets/img/402.png',
           fit: BoxFit.cover,
@@ -439,6 +473,7 @@ class Data {
       },
       {
         'name': 'ราดหน้าเส้นหมี่หมู',
+        'like': 0,
         'img': Image.asset(
           'assets/img/403.png',
           fit: BoxFit.cover,
@@ -469,6 +504,7 @@ class Data {
     [
       {
         'name': 'ข้าวห่อไข่สไตล์ญี่ปุ่น',
+        'like': 0,
         'img': Image.asset(
           'assets/img/501.png',
           fit: BoxFit.cover,
@@ -499,6 +535,7 @@ class Data {
       },
       {
         'name': 'เต้าหู้ผัดเสฉวน',
+        'like': 0,
         'img': Image.asset(
           'assets/img/502.png',
           fit: BoxFit.cover,
@@ -526,6 +563,7 @@ class Data {
       },
       {
         'name': 'เบอร์เกอร์เนื้อ',
+        'like': 0,
         'img': Image.asset(
           'assets/img/503.png',
           fit: BoxFit.cover,
@@ -553,6 +591,7 @@ class Data {
     [
       {
         'name': 'ขนมปังชุบไข่',
+        'like': 0,
         'img': Image.asset(
           'assets/img/601.png',
           fit: BoxFit.cover,

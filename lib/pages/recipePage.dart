@@ -271,7 +271,7 @@ class _RecipePageState extends State<RecipePage> {
                   Align(
                     alignment: Alignment.bottomLeft,
                     child: Container(
-                      width: Screen.width * 0.18,
+                      width: Screen.width * 0.24,
                       height: Screen.width * 0.08,
                       padding: EdgeInsets.only(
                           left: Screen.width * 0.07,
@@ -319,6 +319,53 @@ class _RecipePageState extends State<RecipePage> {
                                     text: js.context['location']['href']));
                                 js.context
                                     .callMethod("alert", ['Copy to clipboard']);
+                              },
+                            ),
+                            Spacer(flex: 1),
+                            Container(
+                              width: Screen.width * 0.003,
+                              height: Screen.width * 0.035,
+                              decoration: BoxDecoration(
+                                color: Color(0xff505050),
+                                borderRadius:
+                                    BorderRadius.circular(Screen.width * 0.003),
+                              ),
+                            ),
+                            Spacer(flex: 1),
+                            IconButton(
+                              padding: EdgeInsets.all(0),
+                              alignment: Alignment.center,
+                              icon: Icon(
+                                Data.likeList.contains(
+                                        Data.allData[widget.indexCategory]
+                                            [widget.indexMenu]['name'])
+                                    ? Icons.favorite_rounded
+                                    : Icons.favorite_border_rounded,
+                                size: Screen.width * 0.03,
+                                color: Colors.white,
+                              ),
+                              onPressed: () {
+                                print('like this article');
+                                Data.updateVal = true;
+                                if (Data.likeList.contains(
+                                    Data.allData[widget.indexCategory]
+                                        [widget.indexMenu]['name'])) {
+                                  setState(() {
+                                    Data.allData[widget.indexCategory]
+                                        [widget.indexMenu]['like']--;
+                                    Data.likeList.remove(
+                                        Data.allData[widget.indexCategory]
+                                            [widget.indexMenu]['name']);
+                                  });
+                                } else {
+                                  setState(() {
+                                    Data.allData[widget.indexCategory]
+                                        [widget.indexMenu]['like']++;
+                                    Data.likeList.add(
+                                        Data.allData[widget.indexCategory]
+                                            [widget.indexMenu]['name']);
+                                  });
+                                }
                               },
                             ),
                             Spacer(flex: 2),
